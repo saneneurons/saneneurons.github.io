@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+	</head>
+	<body>
+		<div class="reveal" style="background-color: #383838">
+			<div class="slides">
+
+				<section>
+					<h4 style="text-transform:none">Welcome to</h4>
+					<h3>
+						<span style="
+					    	background-color: #eaaf09;
+					    	color: black;
+					    	padding-right:5px"
+				    	>Sane</span>
+				    	<span style="
+					    	background-color: #02b3d0;
+					    	padding-left:5px"
+				    	>Neurons</span>
+					</h3>
+					<h5 style="text-transform:none">EVA4 Phase2 Group</h5>
+					<p style="text-transform:none; font-size:20px">Click on &rarr; Key</p>
+				</section>
+				<section>You're awesome! <br/>Go ahead</section>
+				<section>
+					<section>
+						<h3 style="text-transform:none">Check below &darr;</h3>
+					</section>
+					<section>
+						<h3>JavaScript Code Sample</h3>
+						<pre class="javascript">
+						<code>
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min; // excluding the max
+}
+
+getRandomInt(10, 20)
+
+						</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Python Code Sample</h3>
+						<pre class="python3">
+						<code>
+
+import random
+
+def getRandom(min, max):
+	n = random.randint(min,max) # including the max
+	return n
+
+print(getRandom(10, 20))
+
+						</code>
+						</pre>
+					</section>
+					<section>
+					    <h3>Bash Code Sample</h3>
+					    <pre class="bash">
+					    	<code>
+				    
+$ echo "Hello, world!"
+$ if [ -e README ]; then
+> echo 'README exists.'
+> else
+> echo "README doesn't exist."
+> fi
+
+$ # Random Number Generator
+$ shuf -i 10-20 -n 1 # including the max
+				    
+							</code>
+						</pre>
+						<p style="font-weight:bold: font-size:35px">See to your Right &rarr; </p>
+			    	</section>
+			    </section>
+			    <section>
+					<h3>Group Members</h3>
+					<ul>
+						<li>Harshit Jain</li>
+						<li>Srilakshmi</li>
+						<li>Uday Kiran</li>
+						<li>Prakash Upadhyay</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
