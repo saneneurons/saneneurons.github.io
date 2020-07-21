@@ -1,0 +1,211 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>AWS Account Setup| Sane Neurons</title>
+
+		<link rel="stylesheet" href="../../dist/reset.css">
+		<link rel="stylesheet" href="../../dist/reveal.css">
+		<link rel="stylesheet" href="../../dist/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../../plugin/highlight/monokai.css" id="highlight-theme">
+	</head>
+	<body>
+		<div class="reveal" style="background-color: #383838">
+			<div class="slides">
+
+				<section>
+					<section>
+						<h3>Serverless App Deployment to AWS Lambda</h3>
+						<p>
+							Pre-requisites ↓
+						</p>
+					</section>
+					<section>
+						<p>Install Docker</p>
+						<p style="font-size: 28px">Visit <a target="_blank" href="https://docs.docker.com/get-docker/">Docker Installation</a> page. Once installed, test with</p>
+						<pre class="bash">
+							<code>
+$ sudo docker run hello-world
+							</code>
+						</pre>
+
+					</section>
+					<section>
+						<p>Install NodeJS / NPM(Node Package Manager)</p>
+						<p style="font-size: 28px">Visit <a target="_blank" href="https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-18-04">NodeJS Installation on Ubuntu</a> page. Once installed, test with</p>
+						<pre class="bash">
+							<code>
+$ node -v
+# Sample Output: v12.18.0
+$ npm -v
+# Sample Output: 6.14.5
+							</code>
+						</pre>
+					</section>
+					<section>
+						<p>Install Serverless</p>
+						<p style="font-size: 28px">Run</p>
+						<pre class="bash">
+							<code>
+# global installation
+$ sudo npm install -g serverless
+							</code>
+						</pre>
+					</section>
+					<section>
+						<p style="font-size: 28px">Once installed, test with</p>
+						<pre class="bash">
+							<code>
+$ serverless -v
+							</code>
+						</pre>
+						<img src="./images/6_Verify_Serverless_SLS_version.png" style="height:50vh" />
+					</section>
+					<section>
+						<p>Configure Serverless with AWS Lambda</p>
+						<p style="font-size: 28px">Assuming you've already followed the <a target="_blank" href="../setup-aws-account">Setup AWS Account</a> guide, Run</p>
+						<pre class="bash">
+							<code>
+$ sls config credentials --provider aws --key &lt;USER_KEY&gt; --secret &lt;USER_SECRET&gt;
+							</code>
+						</pre>
+						<p style="font-size: 28px">You're ready to create your first Serverless app.</p>
+						<p>→</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<p>Create App ↓</p>
+
+					</section>
+					<section>
+						<p>Create the Serverless project using aws-python3 template</p>
+						<pre class="bash">
+							<code>
+$ sls create --template aws-python3 --name hello-saneneurons
+							</code>
+						</pre>
+					</section>
+					<section>
+						<img src="./images/1_Create_Hello-SaneNeurons_Project.png" style="height:50vh" />
+						<p>Project created successfully!</p>
+					</section>
+
+					<section>
+						<p>change <em>handler.py</em> file</p>
+						<pre class="python3">
+							<code>
+import json
+
+
+def hello(event, context):
+    body = {
+        "message": "Hello, SaneNeurons. This is Serverless project v1.0! Your function executed successfully!",
+        # "input": event
+    }
+
+    response = {
+        "statusCode": 200,
+        "body": json.dumps(body)
+    }
+
+    return response
+							</code>
+						</pre>
+					</section>
+					<section>
+						<p>change <em>serverless.yml</em> file</p>
+						<pre class="yml">
+							<code>
+service: hello-saneneurons
+
+provider:
+  name: aws
+  runtime: python3.8
+  stage: dev
+  region: ap-south-1 # make changes here based on your region
+
+functions:
+  hello:
+    handler: handler.hello
+    
+    memory: 128 # added this
+    timeout: 30 # added this
+
+    events:
+      - http:
+          path: users/hello-saneneurons # end-point slug
+          method: get
+							</code>
+						</pre>
+						<p>→</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<p>Deploy App ↓</p>
+
+					</section>
+					<section>
+						<p>run <em>sls deploy</em> from project directory</p>
+						<img src="./images/2_SLS_Service_Deployment.png" style="height:50vh" />
+						<p>copy the end-point to clipboard</p>
+					</section>
+					<section>
+						<p>Visit <a target="_blank" href="https://ap-south-1.console.aws.amazon.com/apigateway">API Gateway</a> page</p>
+						<img src="./images/3_API_Gateway_with_Lambda_Serverless_Function.png" style="height:50vh" />
+					</section>
+					<section>
+						<p>Click the app name to see API details</p>
+						<img src="./images/4_API_Gateway_Lambda_Function_Details.png" style="height:50vh" />
+						<p>→</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<p>Test App End-Point ↓</p>
+					</section>
+					<section>
+						<span style="font-size:28px">Open your favorite web browser and paste the API endpoint:</span>
+						<pre class="javascript">
+							<code style="font-size: 16px">
+https://&lt;app-id&gt;.execute-api.&lt;aws_region_code&gt;.amazonaws.com/&lt;stage_name&gt;/&lt;end-point-path&gt;
+							</code>
+						</pre>
+						<p>example</p>
+						<pre class="javascript">
+							<code>
+https://15dte1d84.execute-api.ap-south-1.amazonaws.com/dev/users/hello-saneneurons
+							</code>
+						</pre>
+					</section>
+					<section>
+						<img src="./images/5_Service_JSON_Response.png" style="height:50vh" />
+						<p>Congratulations! You've deployed the Serverless App.</p>
+						<p>Visit <a target="_blank" href="https://www.saneneurons.com/">SaneNeurons</a> site for detailed tutorial.</p>
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="../../dist/reveal.js"></script>
+		<script src="../../plugin/notes/notes.js"></script>
+		<script src="../../plugin/markdown/markdown.js"></script>
+		<script src="../../plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
